@@ -2,7 +2,7 @@
 
  Back-end server for telkom-juara client pwa, build with Lumen version 8.0
 
- *Read this in other languages: [English](https://github.com/diolan12/telkom-server), [Indonesia](https://github.com/diolan12/family-theatre/blob/main/README.id.md)*
+ *Read this in other languages: [English](https://github.com/diolan12/telkom-server), [Indonesia](https://github.com/diolan12/telkom-server/blob/main/README.id.md)*
 
 ## Requirements
 
