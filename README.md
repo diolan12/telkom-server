@@ -1,6 +1,6 @@
 # telkom-server
 
- Back-end server for telkom-juara client pwa, build with Lumen version 8.0
+ Back-end server for telkom-juara client PWA, build with Lumen version 8.0
 
  *Read this in other languages: [English](https://github.com/diolan12/telkom-server), [Indonesia](https://github.com/diolan12/telkom-server/blob/main/README.id.md)*
 
@@ -9,9 +9,9 @@
 - Web server Apache (recommended XAMPP)
 - PHP (recommended version 7)
 - Browser (e.g. Chrome, Firefox, Safari, Edge)
-- Gitbash (you can get it [here](https://git-scm.com/downloads)) or Github Desktop 64bit ()[here](https://desktop.github.com/).
-- Visual Studio Code (you can get it [here](https://code.visualstudio.com/Download)).
-- Postman (you can get it [here](https://www.postman.com/downloads/)).
+- Gitbash (download [here](https://git-scm.com/downloads)) or Github Desktop 64bit (download [here](https://desktop.github.com/)).
+- Visual Studio Code (download [here](https://code.visualstudio.com/Download)).
+- Postman (download [here](https://www.postman.com/downloads/)).
 
 ## Installation (Windows)
 
