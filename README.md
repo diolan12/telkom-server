@@ -60,14 +60,17 @@ There are 2 main routes available in this server, `/auth` and `/api`. `/auth` is
 
 ### Routes
 
-- `POST` `/auth/login`
+#### Auth
 
-    **Require body**
+- **`POST`** `/auth/login`
+  
+  Handling the login for getting JWT token.
 
-      - nik
-      - password
+    **Require body:**
+  - nik
+  - password
 
-    Return:
+  **Return:**
 
     JWT token for successful login and returning error message upon login error.
 
@@ -89,12 +92,14 @@ There are 2 main routes available in this server, `/auth` and `/api`. `/auth` is
     }
     ```
 
-- `GET` `/auth/verify`
+- **`GET`** `/auth/verify`
 
-    Require header:
-      - Authorization: Bearer {jwt_token}
+    Verifying JWT token validity.
 
-    Return:
+    **Require header:**
+  - Authorization: Bearer {jwt_token}
+
+  **Return:**
 
     Returning decoded jwt token, otherwise will returning error upon malformed JWT token.
 
@@ -128,20 +133,63 @@ There are 2 main routes available in this server, `/auth` and `/api`. `/auth` is
     }
     ```
 
-- `GET` `/api/{resource_name}`
+#### API
 
-    Require header
-      - Authorization: Bearer {jwt_token}
+- **`GET`** `/api/{resource_name}`
+
+    Getting all resource.
+
+    **Require header:**
+  - Authorization: Bearer {jwt_token}
   
-    Return:
+  **Return:**
 
-    Returning multiple resources
+    Returning multiple resources.
 
-- `GET` `/api/{resource_name}/{id}`
+- **`GET`** `/api/{resource_name}/{id}`
+
+    Getting resource based on resource ID.
   
-    Require header
+    **Require header:**
   - Authorization: Bearer {jwt_token}
 
-    Return:
+  **Return:**
 
-    Returning resource based on the resource ID
+    Returning single resource.
+
+- **`POST`** `/api/{resource_name}`
+
+    Create new resource.
+  
+    **Require header:**
+  - Authorization: Bearer {jwt_token}
+
+  **Require body:**
+  - {resource_body}
+
+  **Return:**
+
+    Returning newly created single resource.
+
+- **`PUT`** `/api/{resource_name}/{id}`
+
+    Updating resource based on the resource ID.
+  
+    **Require header:**
+  - Authorization: Bearer {jwt_token}
+
+  **Require body:**
+  - {resource_body}
+  
+  **Return:**
+
+    Returning current updated resource.
+
+- **`DELETE`** `/api/{resource_name}/{id}`
+  
+    **Require header:**
+  - Authorization: Bearer {jwt_token}
+  
+  **Return:**
+
+    Returning multiple resources.
