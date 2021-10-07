@@ -13,7 +13,7 @@
 - Visual Studio Code (you can get it [here](https://code.visualstudio.com/Download)).
 - Postman (you can get it [here](https://www.postman.com/downloads/)).
 
-## Installation (windows)
+## Installation (Windows)
 
 Assuming that you already install the required tools above, let's just proceed with the installation.
 
@@ -25,16 +25,16 @@ Assuming that you already install the required tools above, let's just proceed w
 6. Open the application directory in VSCode.
 7. Copy paste file `.env.example`, then rename to `.env`
 8. Open and edit `.env`, then make sure the server configuration is correct.
-    - Change the database name with your database name in mysql.
+    - Change the database name with your newly created database name in mysql.
     `DB_DATABASE=your_database_name`
-    - Change mysql username (xampp default username is `root`)
+    - Change mysql username (XAMPP default username is `root`)
     `DB_USERNAME=your_mysql_username`
-    - Change mysql password (xampp default password is blank)
+    - Change mysql password (XAMPP default password is blank)
     `DB_PASSWORD=your_mysql_password`
 9. Open Command Prompt, run as administrator to avoid any error.
 10. Open the directory of this application in your Command Prompt.
 11. Launch this installation, type `./install` in cmd then hit enter.
-    If there is an error within the installation, check again repeat step number 8.
+    If there is an error within the installation, check again step number 8.
 12. Done, it's finish but don't close the Command Prompt yet, we'll be launching the server.
 
 ## Lauch The Server (Windows)
