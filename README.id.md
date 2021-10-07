@@ -8,7 +8,7 @@
 
 - Web server Apache (rekomendasi XAMPP)
 - PHP (rekomendasi version 7)
-- Browser (mis. Chrome, Firefox, Safari, Edge)
+- Peramban (mis. Chrome, Firefox, Safari, Edge)
 - Gitbash (download [disini](https://git-scm.com/downloads)) atau Github Desktop 64bit ()[disini](https://desktop.github.com/).
 - Visual Studio Code (download [disini](https://code.visualstudio.com/Download)).
 - Postman (download [disini](https://www.postman.com/downloads/)).
