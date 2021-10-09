@@ -74,6 +74,14 @@ class AuthController extends RestController
     public function verify(Request $request) {
         parent::__construct($request, 'account');
         $token = $request->bearerToken();
+        if ($token == null) {
+            $this->code = 401;
+            $this->response = [
+                'type' => 'ERROR',
+                'message' => 'Blank authorization header'
+            ];
+            return $this->response;
+        }
         try {
             $decodedJWT = $this->firebaseHelper->decode($token);
         } catch (\Throwable $th) {
