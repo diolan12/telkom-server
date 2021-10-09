@@ -37,7 +37,7 @@ Assuming that you already install the required tools above, let's just proceed w
     If there is an error within the installation, check again step number 8.
 12. Done, it's finish but don't close the Command Prompt yet, we'll be launching the server.
 
-## Lauch The Server (Windows)
+## Launch The Server (Windows)
 
 1. From your Command Prompt, type `php -S your_ip4_address:your_port` (recommended use port 8080) then hit enter.
     Make sure to replace it with your machine IP4 Address and Port e.g. `php -S 192.168.1.5:8080`
