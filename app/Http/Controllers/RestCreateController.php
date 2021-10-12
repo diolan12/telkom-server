@@ -26,7 +26,7 @@ class RestCreateController extends RestController
             $data = $this->model->filter($data);
 
             $this->code = (!($id = $this->model->insertGetId($data))) ? 422 : 201;
-            $this->response = $this->model->where('id', $id)->get();
+            $this->response = $this->model->where('id', $id)->first();
         }
         return $this->respond();
     }
