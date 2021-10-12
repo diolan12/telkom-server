@@ -31,6 +31,7 @@ class Account extends BaseModel implements AuthenticatableContract, Authorizable
     {
         unset($data['id']);
         if (!array_key_exists('photo', $data)) { $data['photo'] = 'default.jpg'; }
+        $data['name'] = ucwords($data['password']);
         $data['password'] = Hash::make($data['password']);
         return $data;
     }
