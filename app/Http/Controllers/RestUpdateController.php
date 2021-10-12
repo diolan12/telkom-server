@@ -19,7 +19,7 @@ class RestUpdateController extends RestController
     {
         parent::__construct($request, $table);
         if ($this->model != null) {
-            $data = $this->validate($request, $this->model->validation());
+            $data = $request->all();// $this->validate($request, $this->model->validation());
             $data['updated_at'] = Carbon::now();
             $data = $this->model->filter($data);
 
