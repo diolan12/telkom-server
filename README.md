@@ -44,6 +44,16 @@ Assuming that you already install the required tools above, let's just proceed w
 2. Done, it's running. Now open your browser and go to `http://your_ip4_address:your_port`. You should see this text in your browser `Lumen (8.2.4) (Laravel Components ^8.0)`.
 To stop the server, press Ctrl+C in your Command Prompt.
 
+## Updating The Server
+
+   1. Open Command Prompt then run this command.
+
+      ```bat
+      git pull
+      ```
+
+   2. Server has been updated.
+
 ## Documentation
 
 There are 2 main routes available in this server, `/auth` and `/api`. `/auth` is responsible for authenticating request for using this server. And the `/api` is responsible for handling the resource data within the server, to access this route you need to pass the 'Authorization' header in your request.
