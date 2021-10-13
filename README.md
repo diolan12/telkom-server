@@ -46,7 +46,7 @@ To stop the server, press Ctrl+C in your Command Prompt.
 
 ## Updating The Server
 
-   1. Open Command Prompt then run this command.
+   1. Open Command Prompt on project root directory then run this command.
 
       ```bat
       git pull
