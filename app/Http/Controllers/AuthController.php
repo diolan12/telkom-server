@@ -131,7 +131,7 @@ class AuthController extends RestController
 
         // checking image in request
         if (!$request->hasFile("image")) {
-            $this->code = 401;
+            $this->code = 422;
             $this->response = [
                 'type' => 'ERROR',
                 'message' => 'Blank image file'
