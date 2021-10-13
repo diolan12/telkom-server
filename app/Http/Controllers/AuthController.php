@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\FirebaseHelper;
 use App\Models\Rest\Account;
+use Carbon\Carbon;
 use PHPUnit\Util\Json;
 
 class AuthController extends RestController
@@ -33,7 +34,8 @@ class AuthController extends RestController
      *
      * @return Json
      */
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         parent::__construct($request, 'account');
 
         $credentials = $this->validate($request, [
@@ -43,7 +45,7 @@ class AuthController extends RestController
 
         // check if this NIK exist
         $account = Account::withoutTrashed()->where('nik', $credentials['nik'])->first();
-        if($account == null) {
+        if ($account == null) {
             $this->code = 401;
             $this->response = [
                 'type' => 'ERROR',
@@ -52,7 +54,7 @@ class AuthController extends RestController
             return $this->response;
         }
 
-        if (!Hash::check($credentials['password'], $account['password'])){
+        if (!Hash::check($credentials['password'], $account['password'])) {
             $this->code = 401;
             $this->response = [
                 'type' => 'ERROR',
@@ -71,7 +73,8 @@ class AuthController extends RestController
         return $this->respond();
     }
 
-    public function verify(Request $request) {
+    public function verify(Request $request)
+    {
         parent::__construct($request, 'account');
         $token = $request->bearerToken();
         if ($token == null) {
@@ -95,6 +98,58 @@ class AuthController extends RestController
         $this->response = [
             'type' => 'SUCCESS',
             'message' => $decodedJWT
+        ];
+        return $this->respond();
+    }
+    protected $account;
+    public function uploadPicture(Request $request)
+    {
+        parent::__construct($request, 'account');
+        // checking JWT header
+        $token = $request->bearerToken();
+        if ($token == null) {
+            $this->code = 401;
+            $this->response = [
+                'type' => 'ERROR',
+                'message' => 'Blank authorization header'
+            ];
+            return $this->response;
+        }
+        // decoding JWT
+        try {
+            $decodedJWT = $this->firebaseHelper->decode($token);
+        } catch (\Throwable $th) {
+            $this->code = 401;
+            $this->response = [
+                'type' => 'ERROR',
+                'message' => $th->getMessage()
+            ];
+            return $this->response;
+        }
+        // instantiate account
+        $this->account = Account::where('nik', $decodedJWT->jti)->first();
+
+        // checking image in request
+        if (!$request->hasFile("image")) {
+            $this->code = 401;
+            $this->response = [
+                'type' => 'ERROR',
+                'message' => 'Blank image file'
+            ];
+            return $this->response;
+        }
+
+        $filename = Carbon::now();
+        $image = $request->file('image');
+        $userPicture = $decodedJWT->picture;
+        // if
+        $image->move(storage_path('app/assets/profile'), "$filename.jpg");
+        $this->account->photo = $filename;
+        $this->account->save();
+
+        $this->response = [
+            'type' => 'SUCCESS',
+            'message' => url('/assets/profile/'.$filename)
         ];
         return $this->respond();
     }
