@@ -51,7 +51,7 @@ class AuthController extends RestController
                 'type' => 'ERROR',
                 'message' => "NIK or password wrong"
             ];
-            return $this->response;
+            return $this->respond();
         }
 
         if (!Hash::check($credentials['password'], $account['password'])) {
@@ -60,7 +60,7 @@ class AuthController extends RestController
                 'type' => 'ERROR',
                 'message' => "NIK or password wrong"
             ];
-            return $this->response;
+            return $this->respond();
         }
 
         $jwt = $this->firebaseHelper->encode($account);
@@ -83,7 +83,7 @@ class AuthController extends RestController
                 'type' => 'ERROR',
                 'message' => 'Blank authorization header'
             ];
-            return $this->response;
+            return $this->respond();
         }
         try {
             $decodedJWT = $this->firebaseHelper->decode($token);
@@ -93,7 +93,7 @@ class AuthController extends RestController
                 'type' => 'ERROR',
                 'message' => $th->getMessage()
             ];
-            return $this->response;
+            return $this->respond();
         }
         $this->response = [
             'type' => 'SUCCESS',
@@ -113,7 +113,7 @@ class AuthController extends RestController
                 'type' => 'ERROR',
                 'message' => 'Blank authorization header'
             ];
-            return $this->response;
+            return $this->respond();
         }
         // decoding JWT
         try {
@@ -124,7 +124,7 @@ class AuthController extends RestController
                 'type' => 'ERROR',
                 'message' => $th->getMessage()
             ];
-            return $this->response;
+            return $this->respond();
         }
         // instantiate account
         $this->account = Account::where('nik', $decodedJWT->jti)->first();
@@ -136,7 +136,7 @@ class AuthController extends RestController
                 'type' => 'ERROR',
                 'message' => 'Blank image file'
             ];
-            return $this->response;
+            return $this->respond();
         }
 
         $filename = Carbon::now();
