@@ -17,10 +17,11 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 $router->group(['prefix' => 'auth'], function () use ($router) {
-    $router->post('login', ['uses'=>'AuthController@login']);
-    $router->get('verify', ['uses'=>'AuthController@verify']);
+    $router->post('login', ['uses' => 'AuthController@login']);
+    $router->get('verify', ['uses' => 'AuthController@verify']);
     // Todo GET 'account' return object account ::account()
     // Todo POST 'profile' return generic success/error ::uploadPicture()
+    $router->post('photo', ['uses' => 'AuthController@uploadPicture']);
     // Todo POST 'password' required[oldPassword, newPassword, verifyPassword] return generic success/error ::changePassword()
 
 });
