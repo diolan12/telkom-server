@@ -109,38 +109,7 @@ class AuthController extends RestController
         ];
         return $this->respond();
     }
-    // protected $account;
-    public function account(Request $request) {
-        parent::__construct($request, 'account');
-        // checking JWT header
-        $token = $request->bearerToken();
-        if ($token == null) {
-            $this->code = 401;
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => 'Blank authorization header'
-            ];
-            return $this->respond();
-        }
-        // decoding JWT
-        try {
-            $decodedJWT = $this->firebaseHelper->decode($token);
-        } catch (\Throwable $th) {
-            $this->code = 401;
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => $th->getMessage()
-            ];
-            return $this->respond();
-        }
-        // instantiate account
-        $account = Account::where('nik', $decodedJWT->jti)->first();
-        $this->response = [
-            'type' => 'SUCCESS',
-            'message' => $account
-        ];
-        return $this->respond();
-    }
+    
     public function uploadPicture(Request $request)
     {
         parent::__construct($request, 'account');
