@@ -95,9 +95,17 @@ class AuthController extends RestController
             ];
             return $this->respond();
         }
+        // $this->response = [
+        //     'type' => 'SUCCESS',
+        //     'message' => $decodedJWT
+        // ];
+        // return $this->respond();
+
+        // instantiate account
+        $account = Account::where('nik', $decodedJWT->jti)->first();
         $this->response = [
             'type' => 'SUCCESS',
-            'message' => $decodedJWT
+            'message' => $account
         ];
         return $this->respond();
     }
