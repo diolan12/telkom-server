@@ -19,8 +19,8 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('login', ['uses' => 'AuthController@login']);
     $router->get('verify', ['uses' => 'AuthController@verify', 'middleware' => 'auth']);
-    $router->post('photo', ['uses' => 'AuthController@uploadPicture']);
-    $router->post('password', ['uses' => 'AuthController@changePassword']);
+    $router->post('photo', ['uses' => 'AuthController@uploadPicture', 'middleware' => 'auth']);
+    $router->post('password', ['uses' => 'AuthController@changePassword', 'middleware' => 'auth']);
 });
 $router->group(['prefix' => 'api/{table}', 'middleware' => 'auth'], function () use ($router) {
     $router->get('', ['uses' => 'RestReadController@index']);
