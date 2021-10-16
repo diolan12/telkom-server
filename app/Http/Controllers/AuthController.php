@@ -101,7 +101,38 @@ class AuthController extends RestController
         ];
         return $this->respond();
     }
-    protected $account;
+    // protected $account;
+    public function account(Request $request) {
+        parent::__construct($request, 'account');
+        // checking JWT header
+        $token = $request->bearerToken();
+        if ($token == null) {
+            $this->code = 401;
+            $this->response = [
+                'type' => 'ERROR',
+                'message' => 'Blank authorization header'
+            ];
+            return $this->respond();
+        }
+        // decoding JWT
+        try {
+            $decodedJWT = $this->firebaseHelper->decode($token);
+        } catch (\Throwable $th) {
+            $this->code = 401;
+            $this->response = [
+                'type' => 'ERROR',
+                'message' => $th->getMessage()
+            ];
+            return $this->respond();
+        }
+        // instantiate account
+        $account = Account::where('nik', $decodedJWT->jti)->first();
+        $this->response = [
+            'type' => 'SUCCESS',
+            'message' => $account
+        ];
+        return $this->respond();
+    }
     public function uploadPicture(Request $request)
     {
         parent::__construct($request, 'account');
@@ -127,7 +158,7 @@ class AuthController extends RestController
             return $this->respond();
         }
         // instantiate account
-        $this->account = Account::where('nik', $decodedJWT->jti)->first();
+        $account = Account::where('nik', $decodedJWT->jti)->first();
 
         // checking image in request
         if (!$request->hasFile("image")) {
@@ -144,8 +175,8 @@ class AuthController extends RestController
         $userPicture = $decodedJWT->picture;
         // if
         $image->move(storage_path('app/assets/profile'), "$filename.jpg");
-        $this->account->photo = $filename;
-        $this->account->save();
+        $account->photo = $filename;
+        $account->save();
 
         $this->response = [
             'type' => 'SUCCESS',
