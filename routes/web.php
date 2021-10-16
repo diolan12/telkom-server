@@ -20,6 +20,7 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('login', ['uses' => 'AuthController@login']);
     $router->get('verify', ['uses' => 'AuthController@verify']);
     // Todo GET 'account' return object account ::account()
+    $router->get('account', ['uses' => 'AuthController@account']);
 
     // Todo POST 'profile' return generic success/error ::uploadPicture()
     $router->post('photo', ['uses' => 'AuthController@uploadPicture']);
