@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\Instanceof_;
 use PHPUnit\Util\Json;
 
-class AuthController extends RestController
+class AuthController extends Controller
 {
     /**
      * The firebase helper instance.
@@ -53,8 +53,6 @@ class AuthController extends RestController
      */
     public function login(Request $request)
     {
-        parent::__construct($request, 'account');
-
         $credentials = $this->validate($request, [
             'nik' => 'required',
             'password' => 'required'
@@ -63,31 +61,16 @@ class AuthController extends RestController
         // check if this NIK exist
         $account = Account::withoutTrashed()->where('nik', $credentials['nik'])->first();
         if ($account == null) {
-            $this->code = 401;
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => "NIK or password wrong"
-            ];
-            return $this->respond();
+            return $this->error("NIK or password wrong", 401);
         }
 
         if (!Hash::check($credentials['password'], $account['password'])) {
-            $this->code = 401;
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => "NIK or password wrong"
-            ];
-            return $this->respond();
+            return $this->error("NIK or password wrong", 401);
         }
 
         $jwt = $this->firebaseHelper->encode($account);
 
-        $this->response = [
-            'type' => 'SUCCESS',
-            'message' => $jwt
-        ];
-
-        return $this->respond();
+        return $this->success($jwt);
     }
 
     /**
@@ -97,17 +80,11 @@ class AuthController extends RestController
      */
     public function verify(Request $request)
     {
-        parent::__construct($request, 'account');
-        $this->response = [
-            'type' => 'SUCCESS',
-            'message' => $this->account
-        ];
-        return $this->respond();
+        return $this->success($this->account);
     }
     
     public function changePassword(Request $request)
     {
-        parent::__construct($request, 'account');
         $credentials = $this->validate($request, [
             'oldPassword' => 'required',
             'newPassword' => 'required'
@@ -115,36 +92,20 @@ class AuthController extends RestController
 
         // check if old password is valid
         if (!Hash::check($credentials['oldPassword'], $this->account['password'])) {
-            $this->code = 401;
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => "Password did not match"
-            ];
-            return $this->respond();
+            return $this->error("Password did not match", 401);
         }
 
         $this->account->password = Hash::make($credentials['newPassword']);;
         $this->account->save();
 
-        $this->response = [
-            'type' => 'SUCCESS',
-            'message' => 'Password changed successfully'
-        ];
-        return $this->respond();
+        return $this->success('Password changed successfully');
     }
 
     public function uploadPicture(Request $request)
     {
-        parent::__construct($request, 'account');
-
         // checking image in request
         if (!$request->hasFile("image")) {
-            $this->code = 422;
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => 'Blank image file'
-            ];
-            return $this->respond();
+            return $this->error('Blank image file', 422);
         }
 
         $filename = Carbon::now();
@@ -155,10 +116,6 @@ class AuthController extends RestController
         $this->account->photo = $filename;
         $this->account->save();
 
-        $this->response = [
-            'type' => 'SUCCESS',
-            'message' => url('/assets/profile/' . $filename)
-        ];
-        return $this->respond();
+        return $this->success(url('/assets/profile/' . $filename));
     }
 }
