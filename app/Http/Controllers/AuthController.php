@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use App\FirebaseHelper;
 use App\Models\Rest\Account;
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Access\Authorizable;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\Instanceof_;
 use PHPUnit\Util\Json;
 
 class AuthController extends RestController
@@ -20,19 +24,32 @@ class AuthController extends RestController
     protected $firebaseHelper;
 
     /**
-     * Create a new controller instance.
+         * The Account model entity.
+         * If not authenticated, this will return null
+         *
+         * @var ?\App\Models\Rest\Account
+         */
+    protected $account;
+
+    /**
+     * Create a new controller, Account if not null, and FirebaseHelper instance.
+     * If Auth::user() returning value of Account, then this will instantiate $account
      *
      * @return void
      */
     public function __construct()
     {
+        $account = Auth::user();
+        if ($account != null) {
+            $this->account = $account;
+        }
         $this->firebaseHelper = new FirebaseHelper();
     }
 
     /**
      * Handle the login post method.
      *
-     * @return Json
+     * @return JsonResponse
      */
     public function login(Request $request)
     {
@@ -73,69 +90,52 @@ class AuthController extends RestController
         return $this->respond();
     }
 
+    /**
+     * Verify a JWT then return Account entity.
+     *
+     * @return JsonResponse<Account>
+     */
     public function verify(Request $request)
     {
         parent::__construct($request, 'account');
-        $token = $request->bearerToken();
-        if ($token == null) {
-            $this->code = 401;
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => 'Blank authorization header'
-            ];
-            return $this->respond();
-        }
-        try {
-            $decodedJWT = $this->firebaseHelper->decode($token);
-        } catch (\Throwable $th) {
-            $this->code = 401;
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => $th->getMessage()
-            ];
-            return $this->respond();
-        }
-        // $this->response = [
-        //     'type' => 'SUCCESS',
-        //     'message' => $decodedJWT
-        // ];
-        // return $this->respond();
-
-        // instantiate account
-        $account = Account::where('nik', $decodedJWT->jti)->first();
         $this->response = [
             'type' => 'SUCCESS',
-            'message' => $account
+            'message' => $this->account
         ];
         return $this->respond();
     }
     
+    public function changePassword(Request $request)
+    {
+        parent::__construct($request, 'account');
+        $credentials = $this->validate($request, [
+            'oldPassword' => 'required',
+            'newPassword' => 'required'
+        ]);
+
+        // check if old password is valid
+        if (!Hash::check($credentials['oldPassword'], $this->account['password'])) {
+            $this->code = 401;
+            $this->response = [
+                'type' => 'ERROR',
+                'message' => "Password did not match"
+            ];
+            return $this->respond();
+        }
+
+        $this->account->password = Hash::make($credentials['newPassword']);;
+        $this->account->save();
+
+        $this->response = [
+            'type' => 'SUCCESS',
+            'message' => 'Password changed successfully'
+        ];
+        return $this->respond();
+    }
+
     public function uploadPicture(Request $request)
     {
         parent::__construct($request, 'account');
-        // checking JWT header
-        $token = $request->bearerToken();
-        if ($token == null) {
-            $this->code = 401;
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => 'Blank authorization header'
-            ];
-            return $this->respond();
-        }
-        // decoding JWT
-        try {
-            $decodedJWT = $this->firebaseHelper->decode($token);
-        } catch (\Throwable $th) {
-            $this->code = 401;
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => $th->getMessage()
-            ];
-            return $this->respond();
-        }
-        // instantiate account
-        $account = Account::where('nik', $decodedJWT->jti)->first();
 
         // checking image in request
         if (!$request->hasFile("image")) {
@@ -149,15 +149,15 @@ class AuthController extends RestController
 
         $filename = Carbon::now();
         $image = $request->file('image');
-        $userPicture = $decodedJWT->picture;
-        // if
+        $userOldPhoto = $this->account->photo;
+        // delete if user old photo not default
         $image->move(storage_path('app/assets/profile'), "$filename.jpg");
-        $account->photo = $filename;
-        $account->save();
+        $this->account->photo = $filename;
+        $this->account->save();
 
         $this->response = [
             'type' => 'SUCCESS',
-            'message' => url('/assets/profile/'.$filename)
+            'message' => url('/assets/profile/' . $filename)
         ];
         return $this->respond();
     }
