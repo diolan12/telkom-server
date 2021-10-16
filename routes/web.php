@@ -18,11 +18,9 @@ $router->get('/', function () use ($router) {
 });
 $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('login', ['uses' => 'AuthController@login']);
-    $router->get('verify', ['uses' => 'AuthController@verify']);
+    $router->get('verify', ['uses' => 'AuthController@verify', 'middleware' => 'auth']);
     $router->post('photo', ['uses' => 'AuthController@uploadPicture']);
-    
-    // Todo POST 'password' required[oldPassword, newPassword, verifyPassword] return generic success/error ::changePassword()
-
+    $router->post('password', ['uses' => 'AuthController@changePassword']);
 });
 $router->group(['prefix' => 'api/{table}', 'middleware' => 'auth'], function () use ($router) {
     $router->get('', ['uses' => 'RestReadController@index']);
