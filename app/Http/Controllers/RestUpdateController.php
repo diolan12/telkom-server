@@ -24,8 +24,8 @@ class RestUpdateController extends RestController
             $data = $this->model->filter($data);
 
             $this->code = ($this->model->withTrashed()->where('id', $id)->update($data)) ? 200 : 422;
-            $this->response = $this->model->where('id', $id)->first();
+            $this->json = $this->model->where('id', $id)->first();
         }
-        return $this->respond();
+        return $this->response();
     }
 }
