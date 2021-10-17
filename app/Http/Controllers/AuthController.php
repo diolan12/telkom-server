@@ -39,6 +39,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $account = Auth::user();
         if ($account != null) {
             $this->account = $account;
