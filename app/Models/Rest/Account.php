@@ -37,6 +37,10 @@ class Account extends BaseModel implements AuthenticatableContract, Authorizable
         return $data;
     }
 
+    public function getPhotoAttribute($value){
+        return url('/assets/profile/' . $value);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
