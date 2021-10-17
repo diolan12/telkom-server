@@ -152,9 +152,42 @@ Ada 2 routes utama yang tersedia di server, `/auth` dan `/api`. `/auth` bertangg
     **Require header:**
   - Authorization: Bearer {jwt_token}
   
+  **Params (Optional):**
+  - `limitOffset`: {limit}-{offset}
+
+  This will limit the data at given offset, param value separated by dash.
+
+  - `orderBy`: {column}-{ASC/DESC}
+
+  This will ordering data ascending or descending by given column name value, param value separated by dash.
+
+  - `where`: {column}-{condition}-{value};
+
+  This is where clause parameter, param value separated by dash. Support multiple where clauses separated by semicolon.
+  List of conditions are as follows:
+  - `is` ( = )
+  - `<`
+  - `>`
+  - `<is` ( <= )
+  - `>is` ( >= )
+  - `<>`
+  - `!is` ( != )
+  - `LIKE`
+  - `NOT`
+  - `BETWEEN`
+  
+  List of value decorators for condition LIKE are as follows:
+  - `a%`     Finds any values that start with "a"
+  - `%a`     Finds any values that end with "a"
+  - `%or%` Finds any values that have "or" in any position
+  - `_r%`     Finds any values that have "r" in the second position
+  - `a_%`     Finds any values that start with "a" and are at least 2 characters in length
+  - `a__%` Finds any values that start with "a" and are at least 3 characters in length
+  - `a%o`     Finds any values that start with "a" and ends with "o"
+  
   **Return:**
 
-    Returning multiple resources.
+    Returning array of resources.
 
 - **`GET`** `/api/{resource_name}/{id}`
 
