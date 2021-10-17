@@ -24,8 +24,8 @@ class RestDeleteController extends RestController
             // $data = $this->model->filter($data);
 
             $this->code = ($this->model->where('id', $id)->update($data)) ? 200 : 422;
-            $this->response = $this->model->get();
+            $this->json = $this->model->get();
         }
-        return $this->respond();
+        return $this->response();
     }
 }
