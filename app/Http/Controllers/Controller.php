@@ -6,18 +6,40 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    protected $c;
-    protected $b;
+    /**
+     * Response code.
+     *
+     * @var int $code
+     */
+    protected $code;
 
     /**
-     * Returning success response.
+     * Response json.
+     *
+     * @var object $json
+     */
+    protected $json;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->code = 200;
+        $this->json = (object)[];
+    }
+
+    /**
+     * Returning success response with 2xx http status.
      * 
      * @return JsonResponse
      */
     protected function success($content, int $code = 200)
     {
-        $this->c = $code;
-        $this->b = [
+        $this->code = $code;
+        $this->json = [
             'type' => 'SUCCESS',
             'content' => $content
         ];
@@ -25,14 +47,14 @@ class Controller extends BaseController
     }
 
     /**
-     * Returning error response.
+     * Returning error response with 4xx http status.
      * 
      * @return JsonResponse
      */
     protected function error($content, int $code = 400)
     {
-        $this->c = $code;
-        $this->b = [
+        $this->code = $code;
+        $this->json = [
             'type' => 'ERROR',
             'content' => $content
         ];
@@ -46,6 +68,6 @@ class Controller extends BaseController
      */
     protected function response()
     {
-        return response()->json($this->b, $this->c);
+        return response()->json($this->json, $this->code);
     }
 }
