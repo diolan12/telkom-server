@@ -26,7 +26,6 @@ $router->group(['prefix' => 'api/{table}', 'middleware' => 'auth'], function () 
     $router->get('', ['uses' => 'RestReadController@index']);
     $router->get('{id}', ['uses' => 'RestReadController@indexAt']);
     $router->get('{id}/{column}', ['uses' => 'RestReadController@indexAtColumn']);
-    $router->get('w/{column}/{value}', ['uses' => 'RestReadController@indexWhere']);
 
     $router->post('', ['uses' => 'RestCreateController@insert']);
     // $router->post('/w/{column}/{value}', ['uses' => 'RestController@insertWhere']);
