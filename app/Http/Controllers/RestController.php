@@ -6,10 +6,19 @@ use Illuminate\Http\Request;
 
 class RestController extends Controller {
 
-    protected $model;
+    /**
+     * The model class name.
+     *
+     * @var string $modelClassName
+     */
     protected $modelClassName;
-    protected $response;
-    protected $code;
+
+    /**
+     * The model instance.
+     *
+     * @var \App\Models\BaseModel $model
+     */
+    protected $model;
 
     /**
      * Create a new controller instance.
@@ -18,20 +27,20 @@ class RestController extends Controller {
      */
     public function __construct(Request $request, $table)
     {
+        parent::__construct();
         $this->modelClassName = "";
-        $this->response = null;
-        $this->code = 200;
         $this->model = $this->init($table);
 
         if ($this->model == null) {
-            $this->response = [
-                'type' => 'ERROR',
-                'message' => "$this->modelClassName does not exist"
-            ];
-            $this->code = 400;
+            $this->error("$this->modelClassName does not exist");
         }
     }
 
+    /**
+     * Initialize a new model instance.
+     *
+     * @return \App\Models\BaseModel|null
+     */
     protected function init($table)
     {
         $unprocessed = explode('-', $table);
@@ -45,13 +54,7 @@ class RestController extends Controller {
         if (class_exists($model)) {
             return new $model();
         } else {
-            $this->code = 400;
             return null;
         }
     }
-
-    protected function respond(){
-        return response()->json($this->response, $this->code);
-    }
-
 }
