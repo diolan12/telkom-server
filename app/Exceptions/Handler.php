@@ -52,14 +52,15 @@ class Handler extends ExceptionHandler
         // return parent::render($request, $exception);
         $rendered = parent::render($request, $exception);
 
+        $code = $rendered->getStatusCode();
         $message = $exception->getMessage();
-        if ($rendered->getStatusCode() == 404) {
+        if ($code == 404) {
             $message = "Not Found";
         }
         return response()->json([
             'type' => 'ERROR',
             'content' => [
-                'code' => $rendered->getStatusCode(),
+                'code' => $code,
                 'message' => $message,
             ]
         ], $rendered->getStatusCode());
