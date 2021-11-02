@@ -1,0 +1,95 @@
+server:
+  command: "php psr-worker.php"
+
+# http service configuration.
+http:
+  address: 0.0.0.0:8080
+
+  pool:
+    num_workers: 4
+  # workers:
+  #   command: "php app.php"
+  #   pool.numWorkers: 4
+  
+  middleware: ["headers", "static"]
+  # serve static files
+  static:
+    dir:    "storage/app"
+    forbid: [".php", ".htaccess"]
+
+  # File uploading settings.
+  uploads:
+    # Directory for file uploads. Empty value means to use $TEMP based on your OS.
+    #
+    # Default: ""
+    dir: "storage/app"
+
+  # Settings for "headers" middleware (docs: https://roadrunner.dev/docs/http-headers).
+  headers:
+    # Allows to control CORS headers. Additional headers "Vary: Origin", "Vary: Access-Control-Request-Method",
+    # "Vary: Access-Control-Request-Headers" will be added to the server responses. Drop this section for this
+    # feature disabling.
+    cors:
+      # Controls "Access-Control-Allow-Origin" header value (docs: https://mzl.la/2OgD4Qf).
+      #
+      # Default: ""
+      allowed_origin: "*"
+
+      # Controls "Access-Control-Allow-Headers" header value (docs: https://mzl.la/2OzDVvk).
+      #
+      # Default: ""
+      allowed_headers: "*"
+
+      # Controls "Access-Control-Allow-Methods" header value (docs: https://mzl.la/3lbwyXf).
+      #
+      # Default: ""
+      allowed_methods: "GET,POST,PUT,DELETE"
+
+      # Controls "Access-Control-Allow-Credentials" header value (docs: https://mzl.la/3ekJGaY).
+      #
+      # Default: false
+      allow_credentials: true
+
+      # Controls "Access-Control-Expose-Headers" header value (docs: https://mzl.la/3qAqgkF).
+      #
+      # Default: ""
+      exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+
+      # Controls "Access-Control-Max-Age" header value in seconds (docs: https://mzl.la/2PCSdvt).
+      #
+      # Default: 0
+      max_age: 600
+
+    # Automatically add headers to every response.
+    #
+    # Default: <empty map>
+    response:
+      X-Powered-By: "RoadRunner"
+
+# queue and jobs
+# jobs:
+#   dispatch:
+#     app-job-*.pipeline: "local"
+#   pipelines:
+#     local:
+#       broker: "ephemeral"
+#   consume: ["local"]
+
+#   workers:
+#     command: "php app.php"
+#     pool.numWorkers: 2
+
+# serve static files
+# static:
+#   dir:    "storage/app"
+#   forbid: [".php", ".htaccess"]
+
+# metrics:
+#   # prometheus client address (path /metrics added automatically)
+#   address: localhost:2112
+
+# control the max memory usage
+limit:
+  services:
+    http.maxMemory: 100
+    jobs.maxMemory: 100
