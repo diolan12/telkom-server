@@ -1,5 +1,5 @@
 server:
-  command: "php app.php"
+  command: "php psr-worker.php"
 
 # http service configuration.
 http:
