@@ -113,7 +113,7 @@ There are 2 main routes available in this server, `/auth` and `/api`. `/auth` is
 
     Returning decoded jwt token, otherwise will returning error upon malformed JWT token.
 
-    example success login:
+    example success verify:
 
     ```json
     {
@@ -134,7 +134,7 @@ There are 2 main routes available in this server, `/auth` and `/api`. `/auth` is
     }
     ```
 
-  example error login:
+  example error verify:
 
     ```json
     {
