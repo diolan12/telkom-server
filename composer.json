@@ -7,7 +7,10 @@
     "require": {
         "php": "^7.3|^8.0",
         "firebase/php-jwt": "^5.4",
-        "laravel/lumen-framework": "^8.0"
+        "laravel/lumen-framework": "^8.0",
+        "nyholm/psr7": "^1.4",
+        "spiral/roadrunner": "^2.5",
+        "symfony/psr-http-message-bridge": "^2.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
