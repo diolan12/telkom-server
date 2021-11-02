@@ -113,7 +113,7 @@ Ada 2 routes utama yang tersedia di server, `/auth` dan `/api`. `/auth` bertangg
 
     Returning decoded jwt token, otherwise will returning error upon malformed JWT token.
 
-    example success login:
+    example success verify:
 
     ```json
     {
@@ -134,7 +134,7 @@ Ada 2 routes utama yang tersedia di server, `/auth` dan `/api`. `/auth` bertangg
     }
     ```
 
-  example error login:
+  example error verify:
 
     ```json
     {
