@@ -45,7 +45,7 @@ while (true) {
 
         // responding to the roadrunner with psr7 response
         $psr7->respond($psr7Response);
-        // $psr7->respond(new Response(200, [], 'Hello RoadRunner!'));
+        
     } catch (\Throwable $e) {
         $psr7->respond(new Response(500, [], $e));
     }
