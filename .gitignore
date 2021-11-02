@@ -4,6 +4,4 @@ Homestead.json
 Homestead.yaml
 .env
 .phpunit.result.cache
-
-*.yaml
 .rr.yaml
