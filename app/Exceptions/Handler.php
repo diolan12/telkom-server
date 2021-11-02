@@ -49,6 +49,19 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        return parent::render($request, $exception);
+        // return parent::render($request, $exception);
+        $rendered = parent::render($request, $exception);
+
+        $message = $exception->getMessage();
+        if ($rendered->getStatusCode() == 404) {
+            $message = "Not Found";
+        }
+        return response()->json([
+            'type' => 'ERROR',
+            'content' => [
+                'code' => $rendered->getStatusCode(),
+                'message' => $message,
+            ]
+        ], $rendered->getStatusCode());
     }
 }
