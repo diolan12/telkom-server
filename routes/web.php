@@ -13,9 +13,9 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+// $router->get('/', function () use ($router) {
+//     return $router->app->version();
+// });
 $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('login', ['uses' => 'AuthController@login']);
     $router->get('verify', ['uses' => 'AuthController@verify', 'middleware' => 'auth']);
