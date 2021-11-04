@@ -57,12 +57,14 @@ class Handler extends ExceptionHandler
         if ($code == 404) {
             $message = "Not Found";
         }
-        return response()->json([
-            'type' => 'ERROR',
-            'content' => [
-                'code' => $code,
-                'message' => $message,
-            ]
-        ], $rendered->getStatusCode());
+        $index = file_get_contents(url('index.html'));
+        // return response()->json([
+        //     'type' => 'ERROR',
+        //     'content' => [
+        //         'code' => $code,
+        //         'message' => $message,
+        //     ]
+        // ], $rendered->getStatusCode());
+        return response($index, 200);
     }
 }
