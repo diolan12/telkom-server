@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
         $message = $exception->getMessage();
         if ($code == 404) {
             $message = file_get_contents(url('index.html'));
-            return response($message, $code);
+            return response($message, 200)->header('Content-Type', 'text/html');
         }
         return response()->json([
             'type' => 'ERROR',
