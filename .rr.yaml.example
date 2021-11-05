@@ -3,10 +3,10 @@ server:
 
 # http service configuration.
 http:
-  address: 0.0.0.0:8080
+  address: 0.0.0.0:80
 
   pool:
-    num_workers: 4
+    num_workers: 5
   # workers:
   #   command: "php app.php"
   #   pool.numWorkers: 4
@@ -29,36 +29,36 @@ http:
     # Allows to control CORS headers. Additional headers "Vary: Origin", "Vary: Access-Control-Request-Method",
     # "Vary: Access-Control-Request-Headers" will be added to the server responses. Drop this section for this
     # feature disabling.
-    cors:
+    # cors:
       # Controls "Access-Control-Allow-Origin" header value (docs: https://mzl.la/2OgD4Qf).
       #
       # Default: ""
-      allowed_origin: "*"
+      # allowed_origin: "*"
 
       # Controls "Access-Control-Allow-Headers" header value (docs: https://mzl.la/2OzDVvk).
       #
       # Default: ""
-      allowed_headers: "*"
+      # allowed_headers: "*"
 
       # Controls "Access-Control-Allow-Methods" header value (docs: https://mzl.la/3lbwyXf).
       #
       # Default: ""
-      allowed_methods: "GET,POST,PUT,DELETE"
+      # allowed_methods: "GET,POST,PUT,DELETE,OPTIONS"
 
       # Controls "Access-Control-Allow-Credentials" header value (docs: https://mzl.la/3ekJGaY).
       #
       # Default: false
-      allow_credentials: true
+      # allow_credentials: true
 
       # Controls "Access-Control-Expose-Headers" header value (docs: https://mzl.la/3qAqgkF).
       #
       # Default: ""
-      exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+      # exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
 
       # Controls "Access-Control-Max-Age" header value in seconds (docs: https://mzl.la/2PCSdvt).
       #
       # Default: 0
-      max_age: 600
+      # max_age: 86400
 
     # Automatically add headers to every response.
     #
