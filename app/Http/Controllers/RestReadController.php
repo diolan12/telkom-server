@@ -70,12 +70,22 @@ class RestReadController extends RestController
                 ->orderBy($orderBy[0], $orderBy[1])
                 ->get($get);
         } else {
-            // return $where;
-            return $this->model->withTrashed()
+            // trash bin not implemented yet
+
+            if($request->has('clean')) {
+                return $this->model
                 // ->with($relation)
                 ->where($where)
                 ->orderBy($orderBy[0], $orderBy[1])
                 ->get($get);
+            } else {
+                return $this->model->withTrashed()
+                // ->with($relation)
+                ->where($where)
+                ->orderBy($orderBy[0], $orderBy[1])
+                ->get($get);
+            }
+            
         }
     }
 
@@ -90,7 +100,7 @@ class RestReadController extends RestController
                 if ($th->getCode() == '42S22') {
                     // error if column not exist
                     $this->error("Column $this->orderByColumn not found");
-                } else if($this->orderByValue != 'asc' || $this->orderByValue != 'desc'){
+                } else if($request->has('orderBy') && ($this->orderByValue != 'asc' || $this->orderByValue != 'desc')){
                     // error when order value not ASC or DESC
                     $this->error("Value $this->orderByValue is forbidden, order must be ASC or DESC.");
                 } else $this->error($th->getMessage());
