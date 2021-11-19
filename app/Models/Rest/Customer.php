@@ -12,11 +12,14 @@ class Customer extends BaseModel
     public function validation()
     {
         return [
+            'no_indihome' => '',
+            'no_telephone' => '',
             'name' => 'required',
             'email' => 'required|unique:' . $this->getTable(),
             'name' => 'required',
             'gender' => 'required',
             'phone' => 'required',
+            'whatsapp' => '',
             'address' => 'required'
         ];
     }
