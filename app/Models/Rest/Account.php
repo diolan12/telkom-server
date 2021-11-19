@@ -24,7 +24,7 @@ class Account extends BaseModel implements AuthenticatableContract, Authorizable
             'gender' => 'required',
             'phone' => 'required',
             'whatsapp' => '',
-            'password' => 'required',
+            'password' => '',
             'role' => 'required'
         ];
     }
