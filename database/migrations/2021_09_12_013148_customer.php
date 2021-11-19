@@ -16,8 +16,8 @@ class Customer extends Migration
     {Schema::defaultStringLength(256);
         Schema::create(self::$name, function (Blueprint $table) {
             $table->id();
-            $table->string('no_indihome', 8)->unique()->nullable();
-            $table->string('no_telephone', 8)->unique()->nullable();
+            $table->string('no_indihome', 16)->unique()->nullable();
+            $table->string('no_telephone', 16)->unique()->nullable();
             $table->string('email')->unique();
             $table->string('name', 32);
             $table->enum('gender', ['male', 'female']);
