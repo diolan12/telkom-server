@@ -21,7 +21,7 @@ class Order extends Migration
             $table->foreignId('field')->nullable();
             $table->enum('status', ['pending', 'ongoing', 'completed'])->default('pending');
             $table->foreignId('customer');
-            $table->foreignId('service_type');
+            $table->foreignId('service');
             $table->timestamps();
             $table->softDeletes();
         });
