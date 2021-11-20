@@ -16,10 +16,10 @@ class Order extends Migration
     {Schema::defaultStringLength(256);
         Schema::create(self::$name, function (Blueprint $table) {
             $table->id();
-            $table->string('uid', 8)->index()->unique();
+            $table->string('uid', 16)->index()->unique();
             $table->foreignId('office');
             $table->foreignId('field')->nullable();
-            $table->enum('status', ['pending', 'received', 'ongoing', 'completed']);
+            $table->enum('status', ['pending', 'ongoing', 'completed'])->default('pending');
             $table->foreignId('customer');
             $table->foreignId('service_type');
             $table->timestamps();
