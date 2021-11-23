@@ -19,9 +19,13 @@ class Order extends Migration
             $table->string('uid', 16)->index()->unique();
             $table->foreignId('office');
             $table->foreignId('field')->nullable();
-            $table->enum('status', ['pending', 'ongoing', 'trouble', 'completed'])->default('pending');
+            $table->enum('status', ['pending', 'ongoing', 'trouble', 'completed', 'archived'])->default('pending');
             $table->foreignId('customer');
             $table->foreignId('service');
+            $table->string('doc_customer')->nullable()->default(null);
+            $table->dateTime('doc_customer_taken_at')->nullable()->default(null);
+            $table->string('doc_house')->nullable()->default(null);
+            $table->dateTime('doc_house_taken_at')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
         });
