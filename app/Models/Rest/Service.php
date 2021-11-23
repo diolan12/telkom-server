@@ -37,4 +37,11 @@ class Service extends BaseModel
      * @var array
      */
     protected $hidden = [];
+
+    protected $relations = ['type'];
+
+    public function type()
+    {
+        return $this->belongsTo('App\Models\Rest\ServiceType', 'type');
+    }
 }
