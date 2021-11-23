@@ -47,7 +47,7 @@ class Order extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'field', 'office', 'field', 'status', 'customer', 'service'
+        'field', 'office', 'status', 'customer', 'service'
     ];
 
     /**
@@ -56,4 +56,27 @@ class Order extends BaseModel
      * @var array
      */
     protected $hidden = [];
+
+    protected $relations = ['field', 'office', 'customer', 'service', 'service.type'];
+
+    public function field()
+    {
+        return $this->belongsTo('App\Models\Rest\Account', 'field');
+    }
+
+    public function office()
+    {
+        return $this->belongsTo('App\Models\Rest\Account', 'office');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Rest\Customer', 'customer');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo('App\Models\Rest\Service', 'service');
+    }
+
 }
