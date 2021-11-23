@@ -19,7 +19,7 @@ class Order extends Migration
             $table->string('uid', 16)->index()->unique();
             $table->foreignId('office');
             $table->foreignId('field')->nullable();
-            $table->enum('status', ['pending', 'ongoing', 'problem', 'completed'])->default('pending');
+            $table->enum('status', ['pending', 'ongoing', 'trouble', 'completed'])->default('pending');
             $table->foreignId('customer');
             $table->foreignId('service');
             $table->timestamps();
