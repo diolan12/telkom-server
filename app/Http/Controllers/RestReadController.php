@@ -73,23 +73,37 @@ class RestReadController extends RestController
             // trash bin not implemented yet
 
             if($request->has('clean')) {
-                return $this->model
-                // ->with($relation)
-                ->where($where)
-                ->orderBy($orderBy[0], $orderBy[1])
-                ->get($get);
+                if($request->has('relation')) {
+                    return $this->model
+                    ->with($this->model->getRelations())
+                    ->where($where)
+                    ->orderBy($orderBy[0], $orderBy[1])
+                    ->get($get);
+                } else {
+                    return $this->model
+                    ->where($where)
+                    ->orderBy($orderBy[0], $orderBy[1])
+                    ->get($get);
+                }
             } else {
-                return $this->model->withTrashed()
-                // ->with($relation)
-                ->where($where)
-                ->orderBy($orderBy[0], $orderBy[1])
-                ->get($get);
+                if($request->has('relation')) {
+                    return $this->model->withTrashed()
+                    ->with($this->model->getRelations())
+                    ->where($where)
+                    ->orderBy($orderBy[0], $orderBy[1])
+                    ->get($get);
+                } else {
+                    return $this->model->withTrashed()
+                    ->where($where)
+                    ->orderBy($orderBy[0], $orderBy[1])
+                    ->get($get);
+                }
             }
             
         }
     }
 
-    public function index(Request $request, $table)
+    public function get(Request $request, $table)
     {
         parent::__construct($request, $table);
 
@@ -109,22 +123,29 @@ class RestReadController extends RestController
         return $this->response();
     }
 
-    public function indexAt(Request $request, $table, $id)
+    public function getAt(Request $request, $table, $id)
     {
         parent::__construct($request, $table);
         
         if ($this->model != null) {
-            // $relation = explode('-', $request->get("with"));
-            // $relation = ($relation[0] == "") ? [] : $relation;
-            $this->json = $this->model->withTrashed()
-                // ->with($relation)
+            if($request->has('relation')) {
+                $this->json = $this->model->withTrashed()
+                ->with($this->model->getRelations())
                 ->where('id', $id)
                 ->first();
+            } else {
+                $this->json = $this->model->withTrashed()
+                ->where('id', $id)
+                ->first();
+            }
+            // $relation = explode('-', $request->get("with"));
+            // $relation = ($relation[0] == "") ? [] : $relation;
+            
         }
         return $this->response();
     }
 
-    public function indexAtColumn(Request $request, $table, $id, $column)
+    public function getAtColumn(Request $request, $table, $id, $column)
     {
         parent::__construct($request, $table);
         
@@ -135,6 +156,16 @@ class RestReadController extends RestController
                 // ->with($relation)
                 ->where('id', $id)
                 ->first($column);
+        }
+        return $this->response();
+    }
+
+    public function index(Request $request, $table)
+    {
+        parent::__construct($request, $table);
+        
+        if ($this->model != null) {
+            $this->json = $this->model->count();
         }
         return $this->response();
     }
