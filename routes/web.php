@@ -23,9 +23,10 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('password', ['uses' => 'AuthController@changePassword', 'middleware' => 'auth']);
 });
 $router->group(['prefix' => 'api/{table}', 'middleware' => 'auth'], function () use ($router) {
-    $router->get('', ['uses' => 'RestReadController@index']);
-    $router->get('{id}', ['uses' => 'RestReadController@indexAt']);
-    $router->get('{id}/{column}', ['uses' => 'RestReadController@indexAtColumn']);
+    $router->get('/count', ['uses' => 'RestReadController@index']);
+    $router->get('', ['uses' => 'RestReadController@get']);
+    $router->get('{id}', ['uses' => 'RestReadController@getAt']);
+    $router->get('{id}/{column}', ['uses' => 'RestReadController@getAtColumn']);
 
     $router->post('', ['uses' => 'RestCreateController@insert']);
     // $router->post('/w/{column}/{value}', ['uses' => 'RestController@insertWhere']);
