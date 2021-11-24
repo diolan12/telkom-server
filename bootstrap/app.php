@@ -48,6 +48,11 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+// $app->singleton(
+//     Illuminate\Http\Concerns\InteractsWithInput::class,
+//     App\RoadRunnerFileHelper::class
+// );
+
 /*
 |--------------------------------------------------------------------------
 | Register Config Files
