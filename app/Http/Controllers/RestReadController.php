@@ -165,9 +165,9 @@ class RestReadController extends RestController
         parent::__construct($request, $table);
         
         if ($this->model != null) {
-            $this->json = $this->model->count();
+            return $this->success($this->model->count());
         }
-        return $this->response();
+        return $this->error('Model not found');
     }
 
 }
