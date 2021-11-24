@@ -20,13 +20,14 @@ class RoadRunnerFileHelper extends \Illuminate\Http\UploadedFile
         self::$instance = $file;
     }
 
-/**
+    /**
      * Retrieve a file from the request.
      *
      * @param  \Illuminate\Http\UploadedFile  $file
      * @return \RoadRunnerFileHelper|null
      */
-    public static function instance(\Illuminate\Http\UploadedFile $file) {
+    public static function instance(\Illuminate\Http\UploadedFile $file)
+    {
         if (self::$instance == null) {
             self::$instance = new RoadRunnerFileHelper($file);
         }
@@ -41,7 +42,8 @@ class RoadRunnerFileHelper extends \Illuminate\Http\UploadedFile
      * @param  \Illuminate\Http\UploadedFile  $file
      * @return \RoadRunnerFileHelper|null
      */
-    public static function parse(\Illuminate\Http\UploadedFile $file) {
+    public static function parse(\Illuminate\Http\UploadedFile $file)
+    {
         // parent::file($name);
         self::$file = $file;
         return self::instance($file);
@@ -54,12 +56,20 @@ class RoadRunnerFileHelper extends \Illuminate\Http\UploadedFile
      * @param  string  $file
      * @return boolean
      */
-    public function move(string $directory, ?string $name = NULL) {
-        $target = $directory.'/'."$name";
+    public function move(string $directory, ?string $name = NULL)
+    {
+        if ($name == NULL) {
+            $name = self::$file->getClientOriginalName();
+        } //else {
+            // get the file format from last element of the array split by (.) ex: image.jpg
+            //$format = explode('.', self::$file->getClientOriginalName());
+            // $target = $directory . '/' . "$name" . $format[(count($format) - 1)];
+            //$name = "$name." . $format[(count($format) - 1)];
+        //}
+        $target = $directory . '/'. $name;
 
         $isCopied = copy(self::$file->getPathName(), $target);
         $isDeleted = unlink(self::$file->getPathName());
         return $isCopied && $isDeleted;
     }
-    
 }
