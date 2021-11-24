@@ -60,12 +60,8 @@ class RoadRunnerFileHelper extends \Illuminate\Http\UploadedFile
     {
         if ($name == NULL) {
             $name = self::$file->getClientOriginalName();
-        } //else {
-            // get the file format from last element of the array split by (.) ex: image.jpg
-            //$format = explode('.', self::$file->getClientOriginalName());
-            // $target = $directory . '/' . "$name" . $format[(count($format) - 1)];
-            //$name = "$name." . $format[(count($format) - 1)];
-        //}
+        }
+        
         $target = $directory . '/'. $name;
 
         $isCopied = copy(self::$file->getPathName(), $target);
