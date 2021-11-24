@@ -1,7 +1,6 @@
 *
 */
 !.gitignore
-
-!order
+!/order
 !account
 !default.jpg
