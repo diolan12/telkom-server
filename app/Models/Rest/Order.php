@@ -78,5 +78,17 @@ class Order extends BaseModel
     {
         return $this->belongsTo('App\Models\Rest\Service', 'service');
     }
+    public function getDocCustomerAttribute($value){
+        if ($value != null) {
+            return url('/assets/uploads/order/' . $value);
+        }
+        return $value;
+    }
 
+    public function getDocHouseAttribute($value){
+        if ($value != null) {
+            return url('/assets/uploads/order/' . $value);
+        }
+        return $value;
+    }
 }
