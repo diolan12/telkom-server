@@ -38,7 +38,7 @@ class Account extends BaseModel implements AuthenticatableContract, Authorizable
     }
 
     public function getPhotoAttribute($value){
-        return url('/assets/profile/' . $value);
+        return url('/assets/uploads/account/' . $value);
     }
 
     /**
