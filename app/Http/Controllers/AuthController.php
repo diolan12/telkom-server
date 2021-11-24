@@ -40,12 +40,6 @@ class AuthController extends Controller
     public function __construct(Request $request)
     {
         parent::__construct();
-        // $account = Auth::user();
-        // if ($account != null) {
-        //     $this->account = $account;
-        // }
-        
-
         if ($this->firebaseHelper == null) {
             $this->firebaseHelper = FirebaseHelper::instance();
         }
@@ -92,9 +86,6 @@ class AuthController extends Controller
     public function verify(Request $request)
     {
         if ($this->account != null) {
-            // $token = $request->bearerToken();
-            // $tokenDecoded = $this->firebaseHelper->decode($token);
-            // $this->account = Account::where('nik', $tokenDecoded->jti)->first();
             return $this->success($this->account);
         }
         return $this->error("No bearer token received");
