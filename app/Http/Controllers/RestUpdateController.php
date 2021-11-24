@@ -30,17 +30,51 @@ class RestUpdateController extends RestController
         return $this->response();
     }
     public function uploadAtColumn(Request $request, $table, $id, $column) {
-        if (!$request->hasFile("image")) {
-            return $this->error('Blank image file', 422);
+        parent::__construct($request, $table);
+        if ($this->model != null) {
+            if (!$request->hasFile("file")) {
+                return $this->error('Blank file', 422);
+            }
+            $file = $request->file('file');
+
+            $fn = explode('.', $file->getClientOriginalName()); // file path
+            $format = $fn[(count($fn) - 1)];
+
+            $m = $this->model->where('id', $id)->first();
+
+            if ($m->$column != null) {
+                try {
+                    unlink(storage_path("app/assets/uploads/$table").'/'.$m->$column);
+                } catch (\Exception $e) {
+                    // return $this->error('Failed to delete old image', 422);
+                }
+            }
+            
+            if($request->has('name')) {
+                $filename = $request->get('name');
+            } else {
+                $filename = Carbon::now()->format('Y-m-d_H-i-s');
+            }
+            $filename = $filename . '.' . $format;
+
+            $m->$column = $filename;
+            
+            if($request->has('timestamp')) {
+                $timestamp = $request->get('timestamp');
+                $m->$timestamp = Carbon::now();
+            }
+    
+            // $target = storage_path('app/assets/uploads/')."$filename.jpg";
+    
+            $i = RoadRunnerFileHelper::parse($file);
+            $isSuccess = $i->move(storage_path("app/assets/uploads/$table"), "$filename");
+
+            if ($isSuccess) {
+                $m->save();
+            }
+    
+            return $this->success($m);
         }
-
-        $filename = Carbon::now()->format('h-i-s');
-        // $image = $request->file('image')->getPathName(); // file path
-        // $target = storage_path('app/assets/uploads/')."$filename.jpg";
-
-        $i = RoadRunnerFileHelper::parse($request->file('image'));
-        $isSuccess = $i->move(storage_path("app/assets/uploads/$table"), "$filename.jpg");
-
-        return $this->success(url("/assets/uploads/$table/" . $filename.".jpg"));
+        return $this->response();
     }
 }
