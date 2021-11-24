@@ -24,11 +24,11 @@ class AuthController extends Controller
     protected $firebaseHelper;
 
     /**
-         * The Account model entity.
-         * If not authenticated, this will return null
-         *
-         * @var ?\App\Models\Rest\Account
-         */
+     * The Account model entity.
+     * If not authenticated, this will return null
+     *
+     * @var ?\App\Models\Rest\Account
+     */
     protected $account;
 
     /**
@@ -37,14 +37,24 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
         parent::__construct();
-        $account = Auth::user();
-        if ($account != null) {
-            $this->account = $account;
+        // $account = Auth::user();
+        // if ($account != null) {
+        //     $this->account = $account;
+        // }
+        
+
+        if ($this->firebaseHelper == null) {
+            $this->firebaseHelper = FirebaseHelper::instance();
         }
-        $this->firebaseHelper = new FirebaseHelper();
+        if ($request->bearerToken()) {
+            $token = $request->bearerToken();
+            $tokenDecoded = $this->firebaseHelper->decode($token);
+            $this->account = Account::where('nik', $tokenDecoded->jti)->first();
+            // return $this->success($this->account);
+        }
     }
 
     /**
@@ -81,9 +91,15 @@ class AuthController extends Controller
      */
     public function verify(Request $request)
     {
-        return $this->success($this->account);
+        if ($this->account != null) {
+            // $token = $request->bearerToken();
+            // $tokenDecoded = $this->firebaseHelper->decode($token);
+            // $this->account = Account::where('nik', $tokenDecoded->jti)->first();
+            return $this->success($this->account);
+        }
+        return $this->error("No bearer token received");
     }
-    
+
     public function changePassword(Request $request)
     {
         $credentials = $this->validate($request, [
