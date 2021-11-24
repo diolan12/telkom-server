@@ -14,6 +14,15 @@ define('publicKey', file_get_contents(storage_path('public.key.pem')));
 
 class FirebaseHelper {
 
+    private static $instance = null;
+
+    public static function instance() {
+        if (self::$instance == null) {
+            self::$instance = new FirebaseHelper();
+        }
+        return self::$instance;
+    }
+
     public function encode(Account $account){
         $payload = array(
             "iss" => URL::to('/'), // base url server ini
