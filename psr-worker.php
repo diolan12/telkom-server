@@ -19,10 +19,8 @@ $psrHttpFactory = new PsrHttpFactory($psrFactory, $psrFactory, $psrFactory, $psr
 
 $httpFoundationFactory = new HttpFoundationFactory();
 
-while (true) {
+while ($request = $psr7->waitRequest()) {
     try {
-        $request = $psr7->waitRequest();
-
         if (!($request instanceof \Psr\Http\Message\ServerRequestInterface)) { // Termination request received
             break;
         }
