@@ -29,6 +29,7 @@ class RestUpdateController extends RestController
         }
         return $this->response();
     }
+    
     public function uploadAtColumn(Request $request, $table, $id, $column) {
         parent::__construct($request, $table);
         if ($this->model != null) {
