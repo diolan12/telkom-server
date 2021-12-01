@@ -28,16 +28,20 @@ class Order extends BaseModel
     {
         unset($data['id']);
 
-        // SC-20212010001
-        $carbon = Carbon::now('Asia/Jakarta');
-        $month = (strlen($carbon->month) == 1) ? '0'.$carbon->month : $carbon->month;
-        $day = (strlen($carbon->day) == 1) ? '0'.$carbon->day : $carbon->day;
-        $data['uid'] = (string)IdGenerator::generate([
-            'table' => $this->table,
-            'field' => 'uid',
-            'length' => 14,
-            'prefix' => 'SC-'. $carbon->year . $month . $day,
-        ]);
+        if (!array_key_exists('uid', $data)) {
+            // SC-20212010001
+            $carbon = Carbon::now('Asia/Jakarta');
+            $month = (strlen($carbon->month) == 1) ? '0' . $carbon->month : $carbon->month;
+            $day = (strlen($carbon->day) == 1) ? '0' . $carbon->day : $carbon->day;
+
+            $data['uid'] = (string)IdGenerator::generate([
+                'table' => $this->table,
+                'field' => 'uid',
+                'length' => 14,
+                'prefix' => 'SC-' . $carbon->year . $month . $day,
+            ]);
+        }
+
         return $data;
     }
 
@@ -78,14 +82,16 @@ class Order extends BaseModel
     {
         return $this->belongsTo('App\Models\Rest\Service', 'service');
     }
-    public function getDocCustomerAttribute($value){
+    public function getDocCustomerAttribute($value)
+    {
         if ($value != null) {
             return url('/assets/uploads/order/' . $value);
         }
         return $value;
     }
 
-    public function getDocHouseAttribute($value){
+    public function getDocHouseAttribute($value)
+    {
         if ($value != null) {
             return url('/assets/uploads/order/' . $value);
         }
