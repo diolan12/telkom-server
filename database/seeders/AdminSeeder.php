@@ -23,7 +23,7 @@ class AdminSeeder extends Seeder
             'name' => 'Dio Lantief Widoyoko',
             'gender' => 'male',
             'phone' => '085648535927',
-            'whatsapp' => '085648535927',
+            'whatsapp' => '6285648535927',
             'photo' => 'default.jpg',
             'password' => Hash::make('12345678'),
             'role' => 0,
