@@ -26,6 +26,11 @@ class Customer extends BaseModel
     public function filter($data)
     {
         unset($data['id']);
+        if(array_key_exists('whatsapp', $data)){
+            if($data['whatsapp'] != null && $data['whatsapp'][0] == '0'){
+                $data['whatsapp'] = "62".substr($data['whatsapp'], 1);
+            }
+        }
         return $data;
     }
 
