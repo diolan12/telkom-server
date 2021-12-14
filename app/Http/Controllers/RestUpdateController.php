@@ -56,7 +56,7 @@ class RestUpdateController extends RestController
             } else {
                 $filename = Carbon::now()->format('Y-m-d_H-i-s');
             }
-            $filename = $filename . '.' . $format;
+            $filename = str_replace(" ", "_",$filename) . '.' . $format;
 
             $m->$column = $filename;
             
