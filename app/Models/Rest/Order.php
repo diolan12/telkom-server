@@ -61,7 +61,7 @@ class Order extends BaseModel
      */
     protected $hidden = [];
 
-    protected $relations = ['field', 'office', 'customer', 'service', 'service.type'];
+    protected $relations = ['field', 'office', 'customer', 'photo', 'service', 'service.type'];
 
     public function field()
     {
@@ -82,6 +82,11 @@ class Order extends BaseModel
     {
         return $this->belongsTo('App\Models\Rest\Service', 'service');
     }
+
+    public function photo() {
+        return $this->hasMany('App\Models\Rest\OrderPhoto', 'order');
+    }
+
     public function getDocCustomerAttribute($value)
     {
         if ($value != null) {
