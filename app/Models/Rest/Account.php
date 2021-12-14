@@ -34,6 +34,11 @@ class Account extends BaseModel implements AuthenticatableContract, Authorizable
         if (!array_key_exists('photo', $data)) { $data['photo'] = 'default.jpg'; }
         if (array_key_exists('name', $data)) $data['name'] = ucwords($data['name']);
         if (array_key_exists('password', $data)) $data['password'] = Hash::make($data['password']);
+        if(array_key_exists('whatsapp', $data)){
+            if($data['whatsapp'] != null && $data['whatsapp'][0] == '0'){
+                $data['whatsapp'] = "62".substr($data['whatsapp'], 1);
+            }
+        }
         return $data;
     }
 
