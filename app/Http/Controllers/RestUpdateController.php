@@ -67,8 +67,8 @@ class RestUpdateController extends RestController
     
             // $target = storage_path('app/assets/uploads/')."$filename.jpg";
     
-            $i = RoadRunnerFileHelper::parse($file);
-            $isSuccess = $i->move(storage_path("app/assets/uploads/$table"), "$filename");
+            $fh = RoadRunnerFileHelper::parse($file);
+            $isSuccess = $fh->move(storage_path("app/assets/uploads/$table"), "$filename");
 
             if ($isSuccess) {
                 $m->save();
