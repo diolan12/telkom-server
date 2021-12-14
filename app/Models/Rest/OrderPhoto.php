@@ -42,7 +42,7 @@ class OrderPhoto extends BaseModel
     public function getFileAttribute($value)
     {
         if ($value != null) {
-            return url('/assets/uploads/order/' . $value);
+            return url('/assets/uploads/order-photo/' . $value);
         }
         return $value;
     }
