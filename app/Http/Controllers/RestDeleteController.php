@@ -20,7 +20,7 @@ class RestDeleteController extends RestController
         parent::__construct($request, $table);
         if ($this->model != null) {
             // $data = $this->validate($request, $this->model->validation());
-            $data['deleted_at'] = Carbon::now();
+            $data['deleted_at'] = Carbon::now('UTC');
             // $data = $this->model->filter($data);
 
             $this->code = ($this->model->where('id', $id)->update($data)) ? 200 : 422;
