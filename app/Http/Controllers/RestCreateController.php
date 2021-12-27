@@ -21,8 +21,8 @@ class RestCreateController extends RestController
         parent::__construct($request, $table);
         if ($this->model != null) {
             $data = $this->validate($request, $this->model->validation());
-            $data['created_at'] = Carbon::now();
-            $data['updated_at'] = Carbon::now();
+            $data['created_at'] = Carbon::now('UTC');
+            $data['updated_at'] = Carbon::now('UTC');
             $data = $this->model->filter($data);
 
             $this->code = (!($id = $this->model->insertGetId($data))) ? 422 : 201;
