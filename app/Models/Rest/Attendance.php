@@ -36,4 +36,11 @@ class Attendance extends BaseModel
      * @var array
      */
     protected $hidden = [];
+
+    protected $relations = ['account'];
+
+    public function account()
+    {
+        return $this->belongsTo('App\Models\Rest\Account', 'account');
+    }
 }
