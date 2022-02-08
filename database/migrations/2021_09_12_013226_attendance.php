@@ -15,7 +15,7 @@ class Attendance extends Migration
     public function up()
     {Schema::defaultStringLength(256);
         Schema::create(self::$name, function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->foreignId('account');
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();

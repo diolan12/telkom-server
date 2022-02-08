@@ -15,7 +15,7 @@ class Role extends Migration
     public function up()
     {Schema::defaultStringLength(256);
         Schema::create(self::$name, function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('level');
             $table->string('name', 16);
         });

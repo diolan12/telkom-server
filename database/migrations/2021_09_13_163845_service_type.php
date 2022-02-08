@@ -15,7 +15,7 @@ class ServiceType extends Migration
     public function up()
     {Schema::defaultStringLength(256);
         Schema::create(self::$name, function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 16);
             $table->timestamps();
             $table->softDeletes();
