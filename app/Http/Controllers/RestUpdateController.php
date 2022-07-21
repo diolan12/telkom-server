@@ -21,7 +21,7 @@ class RestUpdateController extends RestController
         parent::__construct($request, $table);
         if ($this->model != null) {
             $data = $request->all();
-            $data['updated_at'] = Carbon::now('UTC');
+            $data['updated_at'] = Carbon::now();
             $data = $this->model->filter($data);
 
             $this->code = ($this->model->withTrashed()->where('id', $id)->update($data)) ? 200 : 422;
@@ -62,7 +62,7 @@ class RestUpdateController extends RestController
             
             if($request->has('timestamp')) {
                 $timestamp = $request->get('timestamp');
-                $m->$timestamp = Carbon::now('UTC');
+                $m->$timestamp = Carbon::now();
             }
     
             // $target = storage_path('app/assets/uploads/')."$filename.jpg";
