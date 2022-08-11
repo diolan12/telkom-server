@@ -30,7 +30,7 @@ class Order extends BaseModel
 
         if (!array_key_exists('uid', $data)) {
             // SC-20212010001
-            $carbon = Carbon::now('Asia/Jakarta');
+            $carbon = Carbon::now();
             $month = (strlen($carbon->month) == 1) ? '0' . $carbon->month : $carbon->month;
             $day = (strlen($carbon->day) == 1) ? '0' . $carbon->day : $carbon->day;
 
