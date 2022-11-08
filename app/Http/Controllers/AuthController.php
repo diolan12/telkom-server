@@ -66,11 +66,11 @@ class AuthController extends Controller
         // check if this NIK exist
         $account = Account::withoutTrashed()->where('nik', $credentials['nik'])->first();
         if ($account == null) {
-            return $this->error("NIK or password wrong", 401);
+            return $this->error("NIK tidak terdaftar", 401);
         }
 
         if (!Hash::check($credentials['password'], $account['password'])) {
-            return $this->error("NIK or password wrong", 401);
+            return $this->error("Password tidak cocok", 401);
         }
 
         $jwt = $this->firebaseHelper->encode($account);
