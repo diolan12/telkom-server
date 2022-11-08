@@ -19,12 +19,12 @@ class AdminSeeder extends Seeder
     {
         DB::table(self::$name)->insert([
             'nik' => '16982818',
-            'email' => 'dio_lantief21@outlook.com',
-            'name' => 'Dio Lantief Widoyoko',
+            'email' => 'admin@telkomjuara.com',
+            'name' => 'Super Administrator',
             'gender' => 'male',
-            'phone' => '085648535927',
-            'whatsapp' => '6285648535927',
-            'photo' => 'default.jpg',
+            'phone' => '081234567890',
+            'whatsapp' => '6281234567890',
+            'photo' => 'mrpudidi.jpeg',
             'password' => Hash::make('12345678'),
             'role' => 0,
             'created_at' => Carbon::now('UTC')
