@@ -19,11 +19,11 @@ class AdminSeeder extends Seeder
     {
         DB::table(self::$name)->insert([
             'nik' => '16982818',
-            'email' => 'admin@telkomjuara.com',
+            'email' => 'bosandre30@gmail.com',
             'name' => 'Super Administrator',
             'gender' => 'male',
-            'phone' => '081234567890',
-            'whatsapp' => '6281234567890',
+            'phone' => '087888165849',
+            'whatsapp' => '6287888165849',
             'photo' => 'mrpudidi.jpeg',
             'password' => Hash::make('12345678'),
             'role' => 0,
