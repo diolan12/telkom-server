@@ -2,7 +2,7 @@
 
 git pull
 
-set /P id="The batch file is complete:"
+set /P id="Update process finished"
 
 pause
 exit
