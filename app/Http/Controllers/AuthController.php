@@ -47,7 +47,6 @@ class AuthController extends Controller
             $token = $request->bearerToken();
             $tokenDecoded = $this->firebaseHelper->decode($token);
             $this->account = Account::where('nik', $tokenDecoded->jti)->first();
-            // return $this->success($this->account);
         }
     }
 
