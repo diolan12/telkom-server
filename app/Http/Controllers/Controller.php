@@ -34,7 +34,7 @@ class Controller extends BaseController
     /**
      * Returning success response with 2xx http status.
      * 
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function success($content, int $code = 200)
     {
@@ -49,7 +49,7 @@ class Controller extends BaseController
     /**
      * Returning error response with 4xx http status.
      * 
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function error($content, int $code = 400)
     {
@@ -64,7 +64,7 @@ class Controller extends BaseController
     /**
      * Returning response with predefined http code and body content.
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function response()
     {
