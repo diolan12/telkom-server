@@ -28,7 +28,7 @@ class FirebaseHelper {
             "iss" => URL::to('/'), // base url server ini
             "sub" => "Authorization",
             "aud" => $account['nik'], // api key s3 status
-            "iat" => Carbon::now(),
+            // "iat" => Carbon::now(), iat is auto filled by firebase-jwt library
             "jti" => $account['nik'],
             "name" => $account['name'],
             "gender" => $account['gender'],
